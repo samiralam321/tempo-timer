@@ -1,0 +1,572 @@
+/* ==========================================================================
+   STUDY WITH ME — AESTHETIC LOFI POMODORO DESIGN SYSTEM
+   ========================================================================== */
+
+:root {
+  --font-brand: 'Caveat', cursive;
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-white: #FFFFFF;
+  --color-dark: #111111;
+  --color-glass-bg: rgba(255, 255, 255, 0.15);
+  --color-glass-border: rgba(255, 255, 255, 0.35);
+  --color-overlay: rgba(0, 0, 0, 0.25);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  background-color: #0d0d11;
+  color: var(--color-white);
+  font-family: var(--font-ui);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background Image Viewport Engine */
+.bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 800ms ease-in-out;
+  z-index: 1;
+}
+
+/* Background Live Video Engine (Fullscreen Cover Loop) */
+.bg-video-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.45) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Single Viewport Application Container */
+.study-space {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.25rem 3rem;
+}
+
+@media (max-width: 768px) {
+  .study-space {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   1. TOP HEADER (Branding & Mode Selector)
+   -------------------------------------------------------------------------- */
+.top-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.brand-wrap {
+  width: 40px;
+  height: 40px;
+}
+
+/* Mode Switcher Pills Bar */
+.mode-pills-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.35rem 0.4rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.mode-pill {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  color: var(--color-white);
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.45rem 1.25rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.mode-pill:hover {
+  border-color: var(--color-white);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mode-pill.active {
+  background: var(--color-white);
+  color: var(--color-dark);
+  border-color: var(--color-white);
+  text-shadow: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   2. CENTER ZONE (Hero Timer & Control Row)
+   -------------------------------------------------------------------------- */
+.center-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -1.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.timer-digits-hero {
+  font-family: var(--font-ui);
+  font-size: clamp(5.5rem, 18vw, 12.5rem);
+  font-weight: 800;
+  color: var(--color-white);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  text-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Control Buttons Row below Timer */
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+}
+
+.btn-start-pill {
+  background: var(--color-white);
+  color: var(--color-dark);
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  padding: 0.65rem 2.25rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 120ms ease, background-color 150ms ease, box-shadow 150ms ease;
+  min-width: 120px;
+  text-align: center;
+}
+
+.btn-start-pill:hover {
+  background: #F0F0F0;
+  transform: scale(1.03);
+}
+
+.btn-start-pill:active {
+  transform: scale(0.97);
+}
+
+.btn-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 180ms ease;
+  font-size: 1.25rem;
+}
+
+.btn-icon-circle:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: var(--color-white);
+  transform: scale(1.05);
+}
+
+.btn-icon-circle:active {
+  transform: scale(0.95);
+}
+
+/* --------------------------------------------------------------------------
+   3. BOTTOM ZONE (Ultra-Compact Music Pill & Right Utilities)
+   -------------------------------------------------------------------------- */
+.bottom-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+  z-index: 10;
+}
+
+/* Hidden YouTube Audio Iframe */
+.hidden-youtube-audio {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  border: none !important;
+}
+
+/* Ultra-Compact Music Pill Capsule */
+.lofi-compact-pill-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(20, 20, 25, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.35rem 0.5rem 0.35rem 0.75rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  height: 38px;
+}
+
+.lofi-pill-content {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pill-vinyl {
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.pill-vinyl.spinning {
+  animation: spin 3s infinite linear;
+}
+
+.pill-track-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.02em;
+}
+
+.pill-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pill-ctrl-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.pill-ctrl-btn:hover {
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.pill-play-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-dark);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 120ms ease, background-color 150ms ease;
+}
+
+.pill-play-btn:hover {
+  background: #E5E5E5;
+  transform: scale(1.08);
+}
+
+.pill-play-btn:active {
+  transform: scale(0.95);
+}
+
+/* Bottom Right Action Buttons (Identical Dark Glass Square Buttons) */
+.bottom-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-glass-action {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 1.1rem;
+  transition: all 180ms ease;
+}
+
+.btn-glass-action:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: var(--color-white);
+  transform: scale(1.04);
+}
+
+.btn-glass-action:active {
+  transform: scale(0.96);
+}
+
+/* --------------------------------------------------------------------------
+   4. MODALS & DRAWERS (Settings & Wallpapers)
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.settings-card {
+  background: #18181C;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 440px;
+  padding: 1.75rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  color: var(--color-white);
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.settings-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.settings-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.github-header-link {
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 150ms ease, transform 150ms ease;
+  text-decoration: none;
+}
+
+.github-header-link:hover {
+  color: var(--color-white);
+  transform: scale(1.1);
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 6px;
+  transition: color 150ms ease;
+}
+
+.modal-close-btn:hover {
+  color: var(--color-white);
+}
+
+.setting-group {
+  margin-bottom: 1.25rem;
+}
+
+.setting-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.time-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.time-input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.time-input-box label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+}
+
+.time-input-box input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  padding: 0.5rem;
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  text-align: center;
+  outline: none;
+}
+
+.time-input-box input:focus {
+  border-color: var(--color-white);
+}
+
+.wallpaper-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.wallpaper-thumb-card {
+  position: relative;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 180ms ease;
+}
+
+.wallpaper-thumb-card:hover {
+  transform: scale(1.03);
+}
+
+.wallpaper-thumb-card.active {
+  border-color: var(--color-white);
+}
+
+.wallpaper-thumb-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wallpaper-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  padding: 0.2rem 0.4rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-save-settings {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  background: var(--color-white);
+  color: var(--color-dark);
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.btn-save-settings:hover {
+  background: #E5E5E5;
+}
