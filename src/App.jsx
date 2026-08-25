@@ -9,7 +9,7 @@ import { SettingsModal } from "./components/SettingsModal";
 const BOY_STUDYING_IMAGE_URL = "https://go-file-storage.onrender.com/file_storage/Boy_studying_at_desk_in_202608211057.jpeg";
 const YOUR_NAME_ANIME_URL = "https://go-file-storage.onrender.com/file_storage/wp5529802-hd-4k-anime-your-name-wallpapers.jpg";
 const COOL_ANIME_LANDSCAPE_URL = "https://go-file-storage.onrender.com/file_storage/wp6434841-cool-anime-landscape-wallpapers.jpg";
-const SAMURAI_MOONLIT_LAKE_URL = "https://go-file-storage.onrender.com/file_storage/9_serene-samurai-amidst-cherry-blossoms-moonlit-lake%20(1).jpg";
+const SAMURAI_MOONLIT_LAKE_URL = "/backgrounds/samurai-moonlit-lake.jpg";
 const AESTHETIC_ANIME_NIGHT_URL = "https://go-file-storage.onrender.com/file_storage/2152014291.jpg";
 const ANIME_NIGHT_SKY_URL = "https://go-file-storage.onrender.com/file_storage/anime-night-sky-illustration.jpg";
 const PEACEFUL_ANIME_SUNSET_URL = "https://go-file-storage.onrender.com/file_storage/wp9315335-peaceful-anime-4k-wallpapers.jpg";
@@ -193,7 +193,7 @@ export default function App() {
       ) : (
         <div
           className="bg-layer"
-          style={{ backgroundImage: `url(${currentTheme.url})` }}
+          style={{ backgroundImage: `url("${currentTheme.url}")` }}
         />
       )}
       
