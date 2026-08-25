@@ -46,7 +46,6 @@ export default function App() {
       const found = WALLPAPERS.find((w) => w.id === savedId);
       if (found) return found;
     } catch (e) {}
-    // Default to Boy Studying at Desk image
     return WALLPAPERS[0];
   });
 
@@ -68,26 +67,74 @@ export default function App() {
     } catch (e) {}
   };
 
-  // Toggle Fullscreen API
+  // Cross-browser helper to get active fullscreen element
+  const getFullscreenElement = () => {
+    return (
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement ||
+      null
+    );
+  };
+
+  // Robust Cross-Browser Fullscreen API Toggle
   const toggleFullscreen = useCallback(() => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-      setIsFullscreen(true);
+    const fsElement = getFullscreenElement();
+    const docEl = document.documentElement;
+
+    if (!fsElement) {
+      // Enter Fullscreen
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch(() => {
+          setIsFullscreen((prev) => !prev);
+        });
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+        setIsFullscreen(true);
+      } else if (docEl.mozRequestFullScreen) {
+        docEl.mozRequestFullScreen();
+        setIsFullscreen(true);
+      } else if (docEl.msRequestFullscreen) {
+        docEl.msRequestFullscreen();
+        setIsFullscreen(true);
+      } else {
+        // Fallback for browsers/devices that block native fullscreen API
+        setIsFullscreen((prev) => !prev);
+      }
     } else {
+      // Exit Fullscreen
       if (document.exitFullscreen) {
         document.exitFullscreen().catch(() => {});
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
       }
       setIsFullscreen(false);
     }
   }, []);
 
-  // Listen to fullscreen changes
+  // Listen to native fullscreen changes across all vendor prefixes
   useEffect(() => {
     const handleFsChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      const active = !!getFullscreenElement();
+      setIsFullscreen(active);
     };
-    document.addEventListener("fullscreenchange", handleFsChange);
-    return () => document.removeEventListener("fullscreenchange", handleFsChange);
+
+    const events = [
+      "fullscreenchange",
+      "webkitfullscreenchange",
+      "mozfullscreenchange",
+      "MSFullscreenChange",
+    ];
+
+    events.forEach((evt) => document.addEventListener(evt, handleFsChange));
+    return () => {
+      events.forEach((evt) => document.removeEventListener(evt, handleFsChange));
+    };
   }, []);
 
   // Global Keyboard Shortcuts
@@ -101,14 +148,17 @@ export default function App() {
       } else if (e.key.toLowerCase() === "r") {
         e.preventDefault();
         resetTimer();
+      } else if (e.key.toLowerCase() === "f") {
+        e.preventDefault();
+        toggleFullscreen();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [status, startTimer, pauseTimer, resetTimer]);
+  }, [status, startTimer, pauseTimer, resetTimer, toggleFullscreen]);
 
   return (
-    <div className="study-space">
+    <div className={`study-space ${isFullscreen ? "is-fullscreen-fallback" : ""}`}>
       {/* Background Live Video or Image Layer */}
       {currentTheme.type === "video" ? (
         <video
@@ -173,7 +223,7 @@ export default function App() {
             type="button"
             className="btn-glass-action"
             onClick={toggleFullscreen}
-            title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+            title={isFullscreen ? "Exit Fullscreen (F)" : "Enter Fullscreen (F)"}
             aria-label="Toggle Fullscreen"
           >
             {isFullscreen ? "🗗" : "⛶"}
