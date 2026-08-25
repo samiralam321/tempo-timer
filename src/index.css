@@ -53,8 +53,9 @@ html, body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: background-image 800ms ease-in-out;
+  transition: background-image 150ms ease-in-out;
   z-index: 1;
+  will-change: background-image;
 }
 
 /* Background Live Video Engine (Fullscreen Cover Loop) */
