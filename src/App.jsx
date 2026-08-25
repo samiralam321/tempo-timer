@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { usePomodoro } from "./hooks/usePomodoro";
 import { Header } from "./components/Header";
 import { HeroTimer } from "./components/HeroTimer";
@@ -9,7 +9,8 @@ import { SettingsModal } from "./components/SettingsModal";
 const BOY_STUDYING_IMAGE_URL = "https://go-file-storage.onrender.com/file_storage/Boy_studying_at_desk_in_202608211057.jpeg";
 const YOUR_NAME_ANIME_URL = "https://go-file-storage.onrender.com/file_storage/wp5529802-hd-4k-anime-your-name-wallpapers.jpg";
 const COOL_ANIME_LANDSCAPE_URL = "https://go-file-storage.onrender.com/file_storage/wp6434841-cool-anime-landscape-wallpapers.jpg";
-const SAMURAI_MOONLIT_LAKE_URL = "https://go-file-storage.onrender.com/file_storage/serene-samurai-amidst-cherry-blossoms-moonlit-lake (1).jpg";
+// Encoded URI to fix spaces and special characters in file name
+const SAMURAI_MOONLIT_LAKE_URL = "https://go-file-storage.onrender.com/file_storage/serene-samurai-amidst-cherry-blossoms-moonlit-lake%20(1).jpg";
 const AESTHETIC_ANIME_NIGHT_URL = "https://go-file-storage.onrender.com/file_storage/2152014291.jpg";
 const ANIME_NIGHT_SKY_URL = "https://go-file-storage.onrender.com/file_storage/anime-night-sky-illustration.jpg";
 const PEACEFUL_ANIME_SUNSET_URL = "https://go-file-storage.onrender.com/file_storage/wp9315335-peaceful-anime-4k-wallpapers.jpg";
@@ -19,11 +20,16 @@ const PEACEFUL_DESKTOP_URL = "https://go-file-storage.onrender.com/file_storage/
 const SUNSET_VALLEY_URL = "https://go-file-storage.onrender.com/file_storage/uwp5081657.jpeg";
 const CALM_ULTRA_HD_URL = "https://go-file-storage.onrender.com/file_storage/wp11527838-calm-ultra-hd-wallpapers.jpg";
 
+const ANIME_RAIN_VIDEO_URL = "https://go-file-storage.onrender.com/file_storage/jwhJZ0R1RB7HKIvM.mp4";
+const ANIME_STUDY_VIDEO_URL = "https://go-file-storage.onrender.com/file_storage/pHD1kOIDMmjZfwn-.mp4";
+
 const WALLPAPERS = [
   { id: "boy-studying", name: "Boy Studying at Desk", type: "image", url: BOY_STUDYING_IMAGE_URL },
+  { id: "anime-rain-video", name: "Anime Rain Window (Video)", type: "video", url: ANIME_RAIN_VIDEO_URL },
+  { id: "anime-study-video", name: "Anime Study Room (Video)", type: "video", url: ANIME_STUDY_VIDEO_URL },
+  { id: "samurai-moonlit-lake", name: "Samurai Moonlit Lake", type: "image", url: SAMURAI_MOONLIT_LAKE_URL },
   { id: "your-name-anime", name: "Your Name 4K Anime", type: "image", url: YOUR_NAME_ANIME_URL },
   { id: "cool-anime-landscape", name: "Cool Anime Landscape", type: "image", url: COOL_ANIME_LANDSCAPE_URL },
-  { id: "samurai-moonlit-lake", name: "Samurai Moonlit Lake", type: "image", url: SAMURAI_MOONLIT_LAKE_URL },
   { id: "aesthetic-anime-night", name: "Aesthetic Anime Night", type: "image", url: AESTHETIC_ANIME_NIGHT_URL },
   { id: "anime-night-sky", name: "Anime Night Sky", type: "image", url: ANIME_NIGHT_SKY_URL },
   { id: "peaceful-anime-sunset", name: "Peaceful Anime Sunset 4K", type: "image", url: PEACEFUL_ANIME_SUNSET_URL },
@@ -58,12 +64,22 @@ export default function App() {
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const videoRef = useRef(null);
 
-  // Preload all wallpaper images into browser memory for lag-free instant switching
+  // Set low background volume (15%) for video backgrounds
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.volume = 0.15;
+    }
+  }, [currentTheme]);
+
+  // Preload wallpaper images into memory for instant, zero-lag switching
   useEffect(() => {
     WALLPAPERS.forEach((w) => {
-      const img = new Image();
-      img.src = w.url;
+      if (w.type === "image") {
+        const img = new Image();
+        img.src = w.url;
+      }
     });
   }, []);
 
@@ -163,11 +179,24 @@ export default function App() {
 
   return (
     <div className={`study-space ${isFullscreen ? "is-fullscreen-fallback" : ""}`}>
-      {/* Background Image Layer */}
-      <div
-        className="bg-layer"
-        style={{ backgroundImage: `url(${currentTheme.url})` }}
-      />
+      {/* Background Live Video or Image Layer */}
+      {currentTheme.type === "video" ? (
+        <video
+          ref={videoRef}
+          key={currentTheme.url}
+          className="bg-video-layer"
+          src={currentTheme.url}
+          autoPlay
+          loop
+          playsInline
+          preload="auto"
+        />
+      ) : (
+        <div
+          className="bg-layer"
+          style={{ backgroundImage: `url(${currentTheme.url})` }}
+        />
+      )}
       
       {/* Soft Dark Vignette Overlay */}
       <div className="bg-overlay" />
