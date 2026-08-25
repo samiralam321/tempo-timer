@@ -12,6 +12,8 @@ const COOL_ANIME_LANDSCAPE_URL = "https://go-file-storage.onrender.com/file_stor
 const SAMURAI_MOONLIT_LAKE_URL = "https://go-file-storage.onrender.com/file_storage/serene-samurai-amidst-cherry-blossoms-moonlit-lake (1).jpg";
 const AESTHETIC_ANIME_NIGHT_URL = "https://go-file-storage.onrender.com/file_storage/2152014291.jpg";
 const ANIME_NIGHT_SKY_URL = "https://go-file-storage.onrender.com/file_storage/anime-night-sky-illustration.jpg";
+const PEACEFUL_ANIME_SUNSET_URL = "https://go-file-storage.onrender.com/file_storage/wp9315335-peaceful-anime-4k-wallpapers.jpg";
+const PEACEFUL_ANIME_NIGHT_URL = "https://go-file-storage.onrender.com/file_storage/wp9315303-peaceful-anime-4k-wallpapers.jpg";
 const SCENERY_4K_URL = "https://go-file-storage.onrender.com/file_storage/wp12575021-scenary-4k-wallpapers.jpg";
 const PEACEFUL_DESKTOP_URL = "https://go-file-storage.onrender.com/file_storage/wp9899910-desktop-peaceful-wallpapers.jpg";
 const SUNSET_VALLEY_URL = "https://go-file-storage.onrender.com/file_storage/uwp5081657.jpeg";
@@ -24,6 +26,8 @@ const WALLPAPERS = [
   { id: "samurai-moonlit-lake", name: "Samurai Moonlit Lake", type: "image", url: SAMURAI_MOONLIT_LAKE_URL },
   { id: "aesthetic-anime-night", name: "Aesthetic Anime Night", type: "image", url: AESTHETIC_ANIME_NIGHT_URL },
   { id: "anime-night-sky", name: "Anime Night Sky", type: "image", url: ANIME_NIGHT_SKY_URL },
+  { id: "peaceful-anime-sunset", name: "Peaceful Anime Sunset 4K", type: "image", url: PEACEFUL_ANIME_SUNSET_URL },
+  { id: "peaceful-anime-night", name: "Peaceful Anime Night 4K", type: "image", url: PEACEFUL_ANIME_NIGHT_URL },
   { id: "scenary-4k", name: "Scenery 4K", type: "image", url: SCENERY_4K_URL },
   { id: "peaceful-desktop", name: "Peaceful Landscape", type: "image", url: PEACEFUL_DESKTOP_URL },
   { id: "sunset-valley", name: "Sunset Valley", type: "image", url: SUNSET_VALLEY_URL },

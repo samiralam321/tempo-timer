@@ -15,6 +15,20 @@ const PLAYLIST = [
     url: "https://go-file-storage.onrender.com/file_storage/Dido-Thank-you-Slowed-Reverb.m4a",
   },
   {
+    id: "golden-brown-love-story",
+    title: "Golden Brown x Love Story",
+    artist: "Slowed Remix",
+    type: "audio",
+    url: "https://go-file-storage.onrender.com/file_storage/Golden-Brown-X-Love-Story-slowed-Remix.m4a",
+  },
+  {
+    id: "kids-m4a",
+    title: "Kids",
+    artist: "Aesthetic Chill",
+    type: "audio",
+    url: "https://go-file-storage.onrender.com/file_storage/Kids.m4a",
+  },
+  {
     id: "CeItO4-ARfk",
     title: "Ghibli Music",
     artist: "Relaxing Piano",
@@ -80,7 +94,7 @@ export function LofiPlayer() {
     }
   };
 
-  // Play/Pause effect for HTML5 audio tracks
+  // Play/Pause & autoPlay handler for HTML5 audio tracks
   useEffect(() => {
     if (currentTrack.type === "audio" && audioRef.current) {
       if (isPlaying) {
@@ -91,13 +105,15 @@ export function LofiPlayer() {
     }
   }, [currentTrack, isPlaying]);
 
-  // Listen for YouTube iframe state changes to auto-advance when YouTube track ends
+  // Listen for YouTube iframe state changes & ended events to auto-advance
   useEffect(() => {
     const handleMessage = (e) => {
       try {
         const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+        if (!data) return;
+        const playerState = data.info?.playerState ?? data.info ?? data.data;
         // YT.PlayerState.ENDED is 0
-        if (data && (data.event === "onStateChange" || data.info === 0) && data.info === 0) {
+        if (playerState === 0 || (data.event === "onStateChange" && data.info === 0)) {
           handleNextTrack();
         }
       } catch (err) {}
@@ -124,6 +140,7 @@ export function LofiPlayer() {
           ref={audioRef}
           key={currentTrack.id}
           src={currentTrack.url}
+          autoPlay={isPlaying}
           onEnded={handleNextTrack}
           aria-hidden="true"
         />
