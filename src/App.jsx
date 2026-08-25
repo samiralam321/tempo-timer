@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { usePomodoro } from "./hooks/usePomodoro";
 import { Header } from "./components/Header";
 import { HeroTimer } from "./components/HeroTimer";
@@ -7,21 +7,25 @@ import { LofiPlayer } from "./components/LofiPlayer";
 import { SettingsModal } from "./components/SettingsModal";
 
 const BOY_STUDYING_IMAGE_URL = "https://go-file-storage.onrender.com/file_storage/Boy_studying_at_desk_in_202608211057.jpeg";
+const SCENERY_4K_URL = "https://go-file-storage.onrender.com/file_storage/wp12575021-scenary-4k-wallpapers.jpg";
+const PEACEFUL_DESKTOP_URL = "https://go-file-storage.onrender.com/file_storage/wp9899910-desktop-peaceful-wallpapers.jpg";
+const SUNSET_VALLEY_URL = "https://go-file-storage.onrender.com/file_storage/uwp5081657.jpeg";
+const CALM_ULTRA_HD_URL = "https://go-file-storage.onrender.com/file_storage/wp11527838-calm-ultra-hd-wallpapers.jpg";
 const JAPANESE_RAIN_FOREST_IMAGE_URL = "https://go-file-storage.onrender.com/file_storage/Japanese_forest_during_rain_2K_202608211049.jpeg";
 const JAPANESE_VILLAGE_IMAGE_URL = "https://go-file-storage.onrender.com/file_storage/Japanese_mountain_village_at_sunset_202608211050.jpeg";
 const TREE_SWIRL_IMAGE_URL = "https://go-file-storage.onrender.com/file_storage/Tree_trunk_and_swirling_sky_202608211032_upscayl_4x_ultrasharp-4x.png";
 const SAVETWITTER_IMAGE_URL = "https://go-file-storage.onrender.com/file_storage/SaveTwitter.Net_HP6v5uBbsAAreIS.jpg";
-const PARK_BENCH_VIDEO_URL = "https://go-file-storage.onrender.com/file_storage/Park_bench_facing_calm_ocean_202608211036.mp4";
-const CLOUDS_VIDEO_URL = "https://go-file-storage.onrender.com/file_storage/Clouds_drifting_through_tree_leaves_202608211024.mp4";
 
 const WALLPAPERS = [
   { id: "boy-studying", name: "Boy Studying at Desk", type: "image", url: BOY_STUDYING_IMAGE_URL },
+  { id: "scenary-4k", name: "Scenery 4K", type: "image", url: SCENERY_4K_URL },
+  { id: "peaceful-desktop", name: "Peaceful Landscape", type: "image", url: PEACEFUL_DESKTOP_URL },
+  { id: "sunset-valley", name: "Sunset Valley", type: "image", url: SUNSET_VALLEY_URL },
+  { id: "calm-ultra-hd", name: "Calm Horizon 4K", type: "image", url: CALM_ULTRA_HD_URL },
   { id: "japanese-rain-forest", name: "Japanese Rain Forest 2K", type: "image", url: JAPANESE_RAIN_FOREST_IMAGE_URL },
   { id: "japanese-village", name: "Japanese Mountain Sunset", type: "image", url: JAPANESE_VILLAGE_IMAGE_URL },
   { id: "tree-swirl-sky", name: "Swirling Sky & Tree", type: "image", url: TREE_SWIRL_IMAGE_URL },
   { id: "aesthetic-room", name: "Aesthetic Space", type: "image", url: SAVETWITTER_IMAGE_URL },
-  { id: "park-bench-video", name: "Calm Ocean Bench", type: "video", url: PARK_BENCH_VIDEO_URL },
-  { id: "clouds-video", name: "Clouds & Leaves", type: "video", url: CLOUDS_VIDEO_URL },
   { id: "dusk", name: "Dusk City", type: "image", url: "/backgrounds/dusk.jpg" },
   { id: "cozy", name: "Cozy Rain", type: "image", url: "/backgrounds/cozy.jpg" },
   { id: "sunset", name: "Golden Sunset", type: "image", url: "/backgrounds/sunset.jpg" },
@@ -51,14 +55,6 @@ export default function App() {
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const videoRef = useRef(null);
-
-  // Set low background volume (15%) for video backgrounds
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.volume = 0.15;
-    }
-  }, [currentTheme]);
 
   const handleSelectTheme = (theme) => {
     setCurrentTheme(theme);
@@ -84,7 +80,6 @@ export default function App() {
     const docEl = document.documentElement;
 
     if (!fsElement) {
-      // Enter Fullscreen
       if (docEl.requestFullscreen) {
         docEl.requestFullscreen().catch(() => {
           setIsFullscreen((prev) => !prev);
@@ -99,11 +94,9 @@ export default function App() {
         docEl.msRequestFullscreen();
         setIsFullscreen(true);
       } else {
-        // Fallback for browsers/devices that block native fullscreen API
         setIsFullscreen((prev) => !prev);
       }
     } else {
-      // Exit Fullscreen
       if (document.exitFullscreen) {
         document.exitFullscreen().catch(() => {});
       } else if (document.webkitExitFullscreen) {
@@ -159,23 +152,11 @@ export default function App() {
 
   return (
     <div className={`study-space ${isFullscreen ? "is-fullscreen-fallback" : ""}`}>
-      {/* Background Live Video or Image Layer */}
-      {currentTheme.type === "video" ? (
-        <video
-          ref={videoRef}
-          key={currentTheme.url}
-          className="bg-video-layer"
-          src={currentTheme.url}
-          autoPlay
-          loop
-          playsInline
-        />
-      ) : (
-        <div
-          className="bg-layer"
-          style={{ backgroundImage: `url(${currentTheme.url})` }}
-        />
-      )}
+      {/* Background Image Layer */}
+      <div
+        className="bg-layer"
+        style={{ backgroundImage: `url(${currentTheme.url})` }}
+      />
       
       {/* Soft Dark Vignette Overlay */}
       <div className="bg-overlay" />
