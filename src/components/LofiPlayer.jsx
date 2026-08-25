@@ -1,25 +1,36 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 
 const PLAYLIST = [
-  {
-    id: "Njt1io9jakQ",
-    title: "Lofi Girl Beats",
-    artist: "Lofi Girl",
-  },
   {
     id: "-pHfPJGatgE",
     title: "Sparkle",
     artist: "Lofi Beats",
+    type: "youtube",
+  },
+  {
+    id: "brown-rice",
+    title: "Brown Rice",
+    artist: "Dido (Slowed & Reverb)",
+    type: "audio",
+    url: "https://go-file-storage.onrender.com/file_storage/Dido-Thank-you-Slowed-Reverb.m4a",
   },
   {
     id: "CeItO4-ARfk",
     title: "Ghibli Music",
     artist: "Relaxing Piano",
+    type: "youtube",
+  },
+  {
+    id: "Njt1io9jakQ",
+    title: "Lofi Girl Beats",
+    artist: "Lofi Girl",
+    type: "youtube",
   },
   {
     id: "MzgMBrtrFc4",
     title: "Deep Focus Beats",
     artist: "Chill Study",
+    type: "youtube",
   },
 ];
 
@@ -27,53 +38,96 @@ export function LofiPlayer() {
   const [trackIndex, setTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const iframeRef = useRef(null);
+  const audioRef = useRef(null);
 
   const currentTrack = PLAYLIST[trackIndex];
 
   // PostMessage commands to YouTube IFrame API
-  const sendIframeCommand = (command) => {
+  const sendIframeCommand = (command, args = []) => {
     if (iframeRef.current && iframeRef.current.contentWindow) {
       iframeRef.current.contentWindow.postMessage(
-        JSON.stringify({ event: "command", func: command, args: [] }),
+        JSON.stringify({ event: "command", func: command, args }),
         "*"
       );
     }
   };
 
+  const handleNextTrack = useCallback(() => {
+    setTrackIndex((prevIdx) => (prevIdx + 1) % PLAYLIST.length);
+    setIsPlaying(true);
+  }, []);
+
+  const handlePrevTrack = useCallback(() => {
+    setTrackIndex((prevIdx) => (prevIdx - 1 + PLAYLIST.length) % PLAYLIST.length);
+    setIsPlaying(true);
+  }, []);
+
   const togglePlay = () => {
     if (isPlaying) {
-      sendIframeCommand("pauseVideo");
+      if (currentTrack.type === "audio" && audioRef.current) {
+        audioRef.current.pause();
+      } else if (currentTrack.type === "youtube") {
+        sendIframeCommand("pauseVideo");
+      }
       setIsPlaying(false);
     } else {
-      sendIframeCommand("playVideo");
+      if (currentTrack.type === "audio" && audioRef.current) {
+        audioRef.current.play().catch(() => {});
+      } else if (currentTrack.type === "youtube") {
+        sendIframeCommand("playVideo");
+      }
       setIsPlaying(true);
     }
   };
 
-  const handleNextTrack = () => {
-    const nextIdx = (trackIndex + 1) % PLAYLIST.length;
-    setTrackIndex(nextIdx);
-    setIsPlaying(true);
-  };
+  // Play/Pause effect for HTML5 audio tracks
+  useEffect(() => {
+    if (currentTrack.type === "audio" && audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play().catch(() => {});
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [currentTrack, isPlaying]);
 
-  const handlePrevTrack = () => {
-    const prevIdx = (trackIndex - 1 + PLAYLIST.length) % PLAYLIST.length;
-    setTrackIndex(prevIdx);
-    setIsPlaying(true);
-  };
+  // Listen for YouTube iframe state changes to auto-advance when YouTube track ends
+  useEffect(() => {
+    const handleMessage = (e) => {
+      try {
+        const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+        // YT.PlayerState.ENDED is 0
+        if (data && (data.event === "onStateChange" || data.info === 0) && data.info === 0) {
+          handleNextTrack();
+        }
+      } catch (err) {}
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [handleNextTrack]);
 
   return (
     <div className="lofi-compact-pill-card">
-      {/* Hidden YouTube Iframe Audio Engine */}
-      <iframe
-        ref={iframeRef}
-        key={currentTrack.id}
-        className="hidden-youtube-audio"
-        src={`https://www.youtube-nocookie.com/embed/${currentTrack.id}?enablejsapi=1&autoplay=${isPlaying ? 1 : 0}&controls=0`}
-        title="Lofi Audio Stream"
-        allow="autoplay; encrypted-media"
-        aria-hidden="true"
-      />
+      {/* Hidden Audio Engines */}
+      {currentTrack.type === "youtube" ? (
+        <iframe
+          ref={iframeRef}
+          key={currentTrack.id}
+          className="hidden-youtube-audio"
+          src={`https://www.youtube-nocookie.com/embed/${currentTrack.id}?enablejsapi=1&autoplay=${isPlaying ? 1 : 0}&controls=0`}
+          title="Lofi Audio Stream"
+          allow="autoplay; encrypted-media"
+          aria-hidden="true"
+        />
+      ) : (
+        <audio
+          ref={audioRef}
+          key={currentTrack.id}
+          src={currentTrack.url}
+          onEnded={handleNextTrack}
+          aria-hidden="true"
+        />
+      )}
 
       {/* Music Icon & Track Title */}
       <div className="lofi-pill-content">
@@ -87,7 +141,7 @@ export function LofiPlayer() {
           type="button"
           className="pill-ctrl-btn"
           onClick={handlePrevTrack}
-          title="Previous Audio Track"
+          title="Previous Track"
           aria-label="Previous Track"
         >
           <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
@@ -119,7 +173,7 @@ export function LofiPlayer() {
           type="button"
           className="pill-ctrl-btn"
           onClick={handleNextTrack}
-          title="Next Audio Track"
+          title="Next Track"
           aria-label="Next Track"
         >
           <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
