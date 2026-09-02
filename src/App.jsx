@@ -10,14 +10,14 @@ const WALLPAPERS = [
   {
     id: "batman-video",
     name: "Batman (Video)",
-    type: "youtube-video",
-    youtubeId: "W9nZ6u15yis",
+    type: "video",
+    url: "https://res.cloudinary.com/dxarkutme/video/upload/v1788325509/jwhJZ0R1RB7HKIvM_m8z1u8.mp4",
   },
   {
     id: "naruto-video",
     name: "Naruto (Video)",
-    type: "youtube-video",
-    youtubeId: "7e90gBu4pas",
+    type: "video",
+    url: "https://res.cloudinary.com/dxarkutme/video/upload/v1788325508/pHD1kOIDMmjZfwn-_zitzyh.mp4",
   },
   {
     id: "samurai-moonlit-lake",
@@ -26,70 +26,77 @@ const WALLPAPERS = [
     url: "/backgrounds/samurai-moonlit-lake.jpg",
   },
   {
-    id: "boy-studying",
-    name: "Boy Studying at Desk",
+    id: "spiderman",
+    name: "SpiderMan",
     type: "image",
-    url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2000",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325508/uwp5081657_ph6plq.jpg",
   },
   {
-    id: "your-name-anime",
-    name: "Your Name 4K Anime",
+    id: "your-name",
+    name: "YourName",
     type: "image",
-    url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2000",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325508/wp5529802-hd-4k-anime-your-name-wallpapers_oeiol3.jpg",
   },
   {
-    id: "cool-anime-landscape",
-    name: "Cool Anime Landscape",
+    id: "night-scenery",
+    name: "Night",
     type: "image",
-    url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325509/wp12575021-scenary-4k-wallpapers_botlbf.jpg",
   },
   {
-    id: "aesthetic-anime-night",
-    name: "Aesthetic Anime Night",
+    id: "aesthetic-horizon",
+    name: "Aesthetic",
     type: "image",
-    url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325508/wp11527838-calm-ultra-hd-wallpapers_nx6a3y.jpg",
   },
   {
-    id: "anime-night-sky",
-    name: "Anime Night Sky",
+    id: "lake-peaceful",
+    name: "Lake",
     type: "image",
-    url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2000",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325508/wp9899910-desktop-peaceful-wallpapers_u7v33x.jpg",
   },
   {
-    id: "peaceful-anime-sunset",
-    name: "Peaceful Anime Sunset 4K",
+    id: "anime-night-room",
+    name: "Anime Night",
     type: "image",
-    url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2000",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325508/2151684333_jwprxd.jpg",
   },
   {
-    id: "peaceful-anime-night",
-    name: "Peaceful Anime Night 4K",
+    id: "study-room",
+    name: "Study",
     type: "image",
-    url: "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2000",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325507/2152014291_rfno68.jpg",
   },
   {
-    id: "scenary-4k",
-    name: "Scenery 4K",
+    id: "evening-landscape",
+    name: "Evening",
     type: "image",
-    url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=2000",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325507/wp6434841-cool-anime-landscape-wallpapers_yp1xyx.jpg",
   },
   {
-    id: "peaceful-landscape",
-    name: "Peaceful Landscape",
+    id: "peaceful-anime",
+    name: "Peaceful Anime",
     type: "image",
-    url: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?q=80&w=2000",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325507/wp9315303-peaceful-anime-4k-wallpapers_j24sss.jpg",
   },
   {
-    id: "sunset-valley",
-    name: "Sunset Valley",
+    id: "sunset-anime",
+    name: "Sunset Anime",
     type: "image",
-    url: "/backgrounds/sunset.jpg",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325507/wp9315335-peaceful-anime-4k-wallpapers_xsymjf.jpg",
   },
   {
-    id: "calm-horizon",
-    name: "Calm Horizon 4K",
+    id: "stranger-things",
+    name: "Stranger Things",
     type: "image",
-    url: "/backgrounds/dusk.jpg",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325506/stranger-things-sinopsis-cinematografico_rhlon5.jpg",
+    associatedTrackId: "every-breath-you-take",
+  },
+  {
+    id: "kids-art",
+    name: "Kids",
+    type: "image",
+    url: "https://res.cloudinary.com/dxarkutme/image/upload/v1788325506/3168628_wocjxn.jpg",
   },
 ];
 
@@ -116,6 +123,7 @@ export default function App() {
     return WALLPAPERS[0];
   });
 
+  const [activeTrackId, setActiveTrackId] = useState(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const videoRef = useRef(null);
@@ -142,6 +150,11 @@ export default function App() {
     try {
       localStorage.setItem("studywithme_bg", theme.id);
     } catch (e) {}
+
+    // If theme has special associated track (e.g. Stranger Things -> Every Breath You Take)
+    if (theme.associatedTrackId) {
+      setActiveTrackId(theme.associatedTrackId);
+    }
   };
 
   // Cross-browser helper to get active fullscreen element
@@ -234,16 +247,7 @@ export default function App() {
   return (
     <div className={`study-space ${isFullscreen ? "is-fullscreen-fallback" : ""}`}>
       {/* Background Live Video or Image Layer */}
-      {currentTheme.type === "youtube-video" ? (
-        <iframe
-          key={currentTheme.youtubeId}
-          className="bg-video-layer"
-          src={`https://www.youtube-nocookie.com/embed/${currentTheme.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${currentTheme.youtubeId}&controls=0&showinfo=0&rel=0&enablejsapi=1`}
-          allow="autoplay; encrypted-media"
-          title="Background Live Video"
-          style={{ pointerEvents: "none" }}
-        />
-      ) : currentTheme.type === "video" ? (
+      {currentTheme.type === "video" ? (
         <video
           ref={videoRef}
           key={currentTheme.url}
@@ -251,6 +255,7 @@ export default function App() {
           src={currentTheme.url}
           autoPlay
           loop
+          muted
           playsInline
           preload="auto"
         />
@@ -285,7 +290,7 @@ export default function App() {
       {/* BOTTOM ZONE */}
       <footer className="bottom-nav">
         {/* Bottom Left: Embedded YouTube Lofi Player */}
-        <LofiPlayer />
+        <LofiPlayer externalTrackId={activeTrackId} />
 
         {/* Bottom Right: Identical Glass Action Buttons */}
         <div className="bottom-right-actions">

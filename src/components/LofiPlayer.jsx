@@ -8,6 +8,13 @@ const PLAYLIST = [
     type: "youtube",
   },
   {
+    id: "every-breath-you-take",
+    title: "Every Breath You Take (Slowed)",
+    artist: "The Police / Stranger Things",
+    type: "audio",
+    url: "https://res.cloudinary.com/dxarkutme/video/upload/v1788326091/the-police-every-breath-you-take-slowed-down_scatgn.m4a",
+  },
+  {
     id: "-pHfPJGatgE",
     title: "Sparkle",
     artist: "Lofi Beats",
@@ -48,13 +55,24 @@ const PLAYLIST = [
   },
 ];
 
-export function LofiPlayer() {
+export function LofiPlayer({ externalTrackId }) {
   const [trackIndex, setTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const iframeRef = useRef(null);
   const audioRef = useRef(null);
 
   const currentTrack = PLAYLIST[trackIndex];
+
+  // Listen to external track trigger (e.g. Stranger Things wallpaper selected)
+  useEffect(() => {
+    if (externalTrackId) {
+      const foundIdx = PLAYLIST.findIndex((t) => t.id === externalTrackId);
+      if (foundIdx !== -1) {
+        setTrackIndex(foundIdx);
+        setIsPlaying(true);
+      }
+    }
+  }, [externalTrackId]);
 
   // PostMessage commands to YouTube IFrame API
   const sendIframeCommand = (command, args = []) => {
