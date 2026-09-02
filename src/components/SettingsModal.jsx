@@ -91,10 +91,14 @@ export function SettingsModal({ isOpen, onClose, config, onSaveConfig, wallpaper
                   className={`wallpaper-thumb-card ${currentTheme.id === w.id ? "active" : ""}`}
                   onClick={() => onSelectTheme(w)}
                 >
-                  {w.type === "video" ? (
+                  {w.thumbUrl ? (
+                    <img src={w.thumbUrl} alt="" className="wallpaper-thumb-img" />
+                  ) : w.youtubeId ? (
+                    <img src={`https://img.youtube.com/vi/${w.youtubeId}/mqdefault.jpg`} alt="" className="wallpaper-thumb-img" />
+                  ) : w.type === "video" ? (
                     <video src={w.url} muted loop autoPlay playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   ) : (
-                    <img src={w.url} alt={w.name} />
+                    <img src={w.url} alt="" className="wallpaper-thumb-img" />
                   )}
                   <div className="wallpaper-title">{w.name}</div>
                 </div>

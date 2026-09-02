@@ -2,6 +2,12 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 
 const PLAYLIST = [
   {
+    id: "CeItO4-ARfk",
+    title: "Ghibli Music",
+    artist: "Relaxing Piano",
+    type: "youtube",
+  },
+  {
     id: "-pHfPJGatgE",
     title: "Sparkle",
     artist: "Lofi Beats",
@@ -27,12 +33,6 @@ const PLAYLIST = [
     artist: "Aesthetic Chill",
     type: "audio",
     url: "https://go-file-storage.onrender.com/file_storage/Kids.m4a",
-  },
-  {
-    id: "CeItO4-ARfk",
-    title: "Ghibli Music",
-    artist: "Relaxing Piano",
-    type: "youtube",
   },
   {
     id: "Njt1io9jakQ",

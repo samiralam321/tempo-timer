@@ -6,37 +6,91 @@ import { Controls } from "./components/Controls";
 import { LofiPlayer } from "./components/LofiPlayer";
 import { SettingsModal } from "./components/SettingsModal";
 
-const BOY_STUDYING_IMAGE_URL = "https://go-file-storage.onrender.com/file_storage/Boy_studying_at_desk_in_202608211057.jpeg";
-const YOUR_NAME_ANIME_URL = "https://go-file-storage.onrender.com/file_storage/wp5529802-hd-4k-anime-your-name-wallpapers.jpg";
-const COOL_ANIME_LANDSCAPE_URL = "https://go-file-storage.onrender.com/file_storage/wp6434841-cool-anime-landscape-wallpapers.jpg";
-const SAMURAI_MOONLIT_LAKE_URL = "/backgrounds/samurai-moonlit-lake.jpg";
-const AESTHETIC_ANIME_NIGHT_URL = "https://go-file-storage.onrender.com/file_storage/2152014291.jpg";
-const ANIME_NIGHT_SKY_URL = "https://go-file-storage.onrender.com/file_storage/anime-night-sky-illustration.jpg";
-const PEACEFUL_ANIME_SUNSET_URL = "https://go-file-storage.onrender.com/file_storage/wp9315335-peaceful-anime-4k-wallpapers.jpg";
-const PEACEFUL_ANIME_NIGHT_URL = "https://go-file-storage.onrender.com/file_storage/wp9315303-peaceful-anime-4k-wallpapers.jpg";
-const SCENERY_4K_URL = "https://go-file-storage.onrender.com/file_storage/wp12575021-scenary-4k-wallpapers.jpg";
-const PEACEFUL_DESKTOP_URL = "https://go-file-storage.onrender.com/file_storage/wp9899910-desktop-peaceful-wallpapers.jpg";
-const SUNSET_VALLEY_URL = "https://go-file-storage.onrender.com/file_storage/uwp5081657.jpeg";
-const CALM_ULTRA_HD_URL = "https://go-file-storage.onrender.com/file_storage/wp11527838-calm-ultra-hd-wallpapers.jpg";
-
-const ANIME_RAIN_VIDEO_URL = "https://go-file-storage.onrender.com/file_storage/jwhJZ0R1RB7HKIvM.mp4";
-const ANIME_STUDY_VIDEO_URL = "https://go-file-storage.onrender.com/file_storage/pHD1kOIDMmjZfwn-.mp4";
-
 const WALLPAPERS = [
-  { id: "boy-studying", name: "Boy Studying at Desk", type: "image", url: BOY_STUDYING_IMAGE_URL },
-  { id: "anime-rain-video", name: "Anime Rain Window (Video)", type: "video", url: ANIME_RAIN_VIDEO_URL },
-  { id: "anime-study-video", name: "Anime Study Room (Video)", type: "video", url: ANIME_STUDY_VIDEO_URL },
-  { id: "samurai-moonlit-lake", name: "Samurai Moonlit Lake", type: "image", url: SAMURAI_MOONLIT_LAKE_URL },
-  { id: "your-name-anime", name: "Your Name 4K Anime", type: "image", url: YOUR_NAME_ANIME_URL },
-  { id: "cool-anime-landscape", name: "Cool Anime Landscape", type: "image", url: COOL_ANIME_LANDSCAPE_URL },
-  { id: "aesthetic-anime-night", name: "Aesthetic Anime Night", type: "image", url: AESTHETIC_ANIME_NIGHT_URL },
-  { id: "anime-night-sky", name: "Anime Night Sky", type: "image", url: ANIME_NIGHT_SKY_URL },
-  { id: "peaceful-anime-sunset", name: "Peaceful Anime Sunset 4K", type: "image", url: PEACEFUL_ANIME_SUNSET_URL },
-  { id: "peaceful-anime-night", name: "Peaceful Anime Night 4K", type: "image", url: PEACEFUL_ANIME_NIGHT_URL },
-  { id: "scenary-4k", name: "Scenery 4K", type: "image", url: SCENERY_4K_URL },
-  { id: "peaceful-desktop", name: "Peaceful Landscape", type: "image", url: PEACEFUL_DESKTOP_URL },
-  { id: "sunset-valley", name: "Sunset Valley", type: "image", url: SUNSET_VALLEY_URL },
-  { id: "calm-ultra-hd", name: "Calm Horizon 4K", type: "image", url: CALM_ULTRA_HD_URL },
+  {
+    id: "batman-video",
+    name: "Batman (Video)",
+    type: "youtube-video",
+    youtubeId: "W9nZ6u15yis",
+  },
+  {
+    id: "naruto-video",
+    name: "Naruto (Video)",
+    type: "youtube-video",
+    youtubeId: "7e90gBu4pas",
+  },
+  {
+    id: "samurai-moonlit-lake",
+    name: "Samurai Moonlit Lake",
+    type: "image",
+    url: "/backgrounds/samurai-moonlit-lake.jpg",
+  },
+  {
+    id: "boy-studying",
+    name: "Boy Studying at Desk",
+    type: "image",
+    url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2000",
+  },
+  {
+    id: "your-name-anime",
+    name: "Your Name 4K Anime",
+    type: "image",
+    url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2000",
+  },
+  {
+    id: "cool-anime-landscape",
+    name: "Cool Anime Landscape",
+    type: "image",
+    url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000",
+  },
+  {
+    id: "aesthetic-anime-night",
+    name: "Aesthetic Anime Night",
+    type: "image",
+    url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000",
+  },
+  {
+    id: "anime-night-sky",
+    name: "Anime Night Sky",
+    type: "image",
+    url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2000",
+  },
+  {
+    id: "peaceful-anime-sunset",
+    name: "Peaceful Anime Sunset 4K",
+    type: "image",
+    url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2000",
+  },
+  {
+    id: "peaceful-anime-night",
+    name: "Peaceful Anime Night 4K",
+    type: "image",
+    url: "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2000",
+  },
+  {
+    id: "scenary-4k",
+    name: "Scenery 4K",
+    type: "image",
+    url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=2000",
+  },
+  {
+    id: "peaceful-landscape",
+    name: "Peaceful Landscape",
+    type: "image",
+    url: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?q=80&w=2000",
+  },
+  {
+    id: "sunset-valley",
+    name: "Sunset Valley",
+    type: "image",
+    url: "/backgrounds/sunset.jpg",
+  },
+  {
+    id: "calm-horizon",
+    name: "Calm Horizon 4K",
+    type: "image",
+    url: "/backgrounds/dusk.jpg",
+  },
 ];
 
 export default function App() {
@@ -58,6 +112,7 @@ export default function App() {
       const found = WALLPAPERS.find((w) => w.id === savedId);
       if (found) return found;
     } catch (e) {}
+    // Default to Batman (Video) for first-time users
     return WALLPAPERS[0];
   });
 
@@ -75,7 +130,7 @@ export default function App() {
   // Preload wallpaper images into memory for instant, zero-lag switching
   useEffect(() => {
     WALLPAPERS.forEach((w) => {
-      if (w.type === "image") {
+      if (w.type === "image" && w.url) {
         const img = new Image();
         img.src = w.url;
       }
@@ -179,7 +234,16 @@ export default function App() {
   return (
     <div className={`study-space ${isFullscreen ? "is-fullscreen-fallback" : ""}`}>
       {/* Background Live Video or Image Layer */}
-      {currentTheme.type === "video" ? (
+      {currentTheme.type === "youtube-video" ? (
+        <iframe
+          key={currentTheme.youtubeId}
+          className="bg-video-layer"
+          src={`https://www.youtube-nocookie.com/embed/${currentTheme.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${currentTheme.youtubeId}&controls=0&showinfo=0&rel=0&enablejsapi=1`}
+          allow="autoplay; encrypted-media"
+          title="Background Live Video"
+          style={{ pointerEvents: "none" }}
+        />
+      ) : currentTheme.type === "video" ? (
         <video
           ref={videoRef}
           key={currentTheme.url}
